@@ -16,7 +16,7 @@ public class ConferenceRestController {
     @Autowired
     private KeynoteRestClient keynoteRestClient;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/name")
     public String get(){
         return "Helaty";
     }
