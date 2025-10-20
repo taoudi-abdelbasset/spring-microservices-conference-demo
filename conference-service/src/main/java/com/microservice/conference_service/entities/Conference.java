@@ -16,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Conference {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     @Enumerated(EnumType.STRING)
@@ -26,7 +27,8 @@ public class Conference {
     private Long inscription;
     private Double score;
     private String keynoteId;
-    @Transient private Keynote keynote;
-    @OneToMany(mappedBy = "conferenceId")
+    @Transient
+    private Keynote keynote;
+    @OneToMany(mappedBy = "conference") // Updated to match the field name in Review
     private List<Review> reviews;
 }

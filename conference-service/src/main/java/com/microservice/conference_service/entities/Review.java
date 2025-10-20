@@ -13,13 +13,13 @@ import java.util.Date;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Builder
 public class Review {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date createdAt;
     private String text;
     private Double note;
+    @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Conference conference;
-    @ManyToOne
-    private Long conferenceId;
 }
