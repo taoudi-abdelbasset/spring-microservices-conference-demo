@@ -16,6 +16,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +37,11 @@ public class ConferenceServiceApplication {
     ) {
         return args -> {
 
-            List<Keynote> keynotes = keynoteRestClient.findAllKeynote();
+            Collection<Keynote> keynotes = keynoteRestClient.findAllKeynote().getContent();
+
+            keynotes.forEach(item->{
+                System.out.println(item.getId() + " : " + item.getEmail());
+            });
             // Initialize sample conferences
             Conference conference1 = Conference.builder()
                     .title("Tech Summit 2025")
@@ -44,19 +50,8 @@ public class ConferenceServiceApplication {
                     .duration(120L)
                     .inscription(100L)
                     .score(4.5)
-                    .keynoteId(keynotes.get(1).getId())
+                    .keynoteId("n")
                     .build();
-
-            for(int i = 0; i<10 ;i++){
-                Review review1 = Review.builder()
-                        .createdAt(new Date())
-                        .text("Great conference with insightful talks!")
-                        .note(Math.random()*5)
-                        .conference(conference1)
-                        .build();
-
-                reviewRepo.save(review1);
-            }
 
             Conference conference2 = Conference.builder()
                     .title("AI Revolution")
@@ -65,23 +60,36 @@ public class ConferenceServiceApplication {
                     .duration(90L)
                     .inscription(150L)
                     .score(4.8)
-                    .keynoteId(keynotes.get(2).getId())
+                    .keynoteId("b")
                     .build();
-
-
-            for(int i = 0; i<10 ;i++){
-                Review review2 = Review.builder()
-                        .createdAt(new Date())
-                        .text("Great conference with insightful talks!")
-                        .note(Math.random()*5)
-                        .conference(conference1)
-                        .build();
-
-                reviewRepo.save(review2);
-            }
 
             conferenceRepo.save(conference1);
             conferenceRepo.save(conference2);
+
+
+//            for(int i = 0; i<10 ;i++){
+//                Review review2 = Review.builder()
+//                        .createdAt(new Date())
+//                        .text("Great conference with insightful talks!")
+//                        .note(Math.random()*5)
+//                        .conference(conference1)
+//                        .build();
+//
+//                reviewRepo.save(review2);
+//            }
+//
+//
+//
+//            for(int i = 0; i<10 ;i++){
+//                Review review1 = Review.builder()
+//                        .createdAt(new Date())
+//                        .text("Great conference with insightful talks!")
+//                        .note(Math.random()*5)
+//                        .conference(conference1)
+//                        .build();
+//
+//                reviewRepo.save(review1);
+//            }
 
             System.out.println("Initialized sample conference data");
         };
