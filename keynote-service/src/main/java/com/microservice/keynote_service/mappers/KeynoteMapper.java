@@ -22,4 +22,16 @@ public class KeynoteMapper {
                 .build();
         return keynoteDTO;
     }
+
+    public Keynote toKeynote(KeynoteDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        return Keynote.builder()
+                .nom(dto.getNom())
+                .prenom(dto.getPrenom())
+                .email(dto.getEmail())
+                .function(dto.getFunction())
+                .build();
+    }
 }

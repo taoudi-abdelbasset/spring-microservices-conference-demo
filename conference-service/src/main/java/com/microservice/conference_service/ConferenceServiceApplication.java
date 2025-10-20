@@ -16,10 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -37,59 +34,32 @@ public class ConferenceServiceApplication {
     ) {
         return args -> {
 
-            Collection<Keynote> keynotes = keynoteRestClient.findAllKeynote().getContent();
+            List<Keynote> keynotes = keynoteRestClient.findAllKeynote();
 
             keynotes.forEach(item->{
-                System.out.println(item.getId() + " : " + item.getEmail());
+                // Initialize sample conferences
+                Conference conference = Conference.builder()
+                        .title("Tech Summit 2025")
+                        .type(Math.random() > 0.5? ConferenceType.ACADEMIQUE_TYPE : ConferenceType.COMMERCIAL_TYPE)
+                        .date(new Date())
+                        .duration(20L + new Random().nextInt(100))
+                        .inscription(10L + new Random().nextInt(40))
+                        .score(4.5)
+                        .keynoteId(item.getId())
+                        .build();
+
+                conferenceRepo.save(conference);
+                for(int i = 0; i<10 ;i++) {
+                    Review review = Review.builder()
+                            .createdAt(new Date())
+                            .text("Great conference with insightful talks!")
+                            .note(Math.random() * 5)
+                            .conference(conference)
+                            .build();
+
+                    reviewRepo.save(review);
+                }
             });
-            // Initialize sample conferences
-            Conference conference1 = Conference.builder()
-                    .title("Tech Summit 2025")
-                    .type(Math.random() > 0.5? ConferenceType.ACADEMIQUE_TYPE : ConferenceType.COMMERCIAL_TYPE)
-                    .date(new Date())
-                    .duration(120L)
-                    .inscription(100L)
-                    .score(4.5)
-                    .keynoteId("n")
-                    .build();
-
-            Conference conference2 = Conference.builder()
-                    .title("AI Revolution")
-                    .type(Math.random() > 0.5? ConferenceType.ACADEMIQUE_TYPE : ConferenceType.COMMERCIAL_TYPE)
-                    .date(new Date())
-                    .duration(90L)
-                    .inscription(150L)
-                    .score(4.8)
-                    .keynoteId("b")
-                    .build();
-
-            conferenceRepo.save(conference1);
-            conferenceRepo.save(conference2);
-
-
-//            for(int i = 0; i<10 ;i++){
-//                Review review2 = Review.builder()
-//                        .createdAt(new Date())
-//                        .text("Great conference with insightful talks!")
-//                        .note(Math.random()*5)
-//                        .conference(conference1)
-//                        .build();
-//
-//                reviewRepo.save(review2);
-//            }
-//
-//
-//
-//            for(int i = 0; i<10 ;i++){
-//                Review review1 = Review.builder()
-//                        .createdAt(new Date())
-//                        .text("Great conference with insightful talks!")
-//                        .note(Math.random()*5)
-//                        .conference(conference1)
-//                        .build();
-//
-//                reviewRepo.save(review1);
-//            }
 
             System.out.println("Initialized sample conference data");
         };

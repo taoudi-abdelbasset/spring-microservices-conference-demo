@@ -19,20 +19,13 @@ public class KeynoteController {
     private KeynoteMapper keynoteMapper;
 
     @GetMapping(path = "/keynote")
-    public List<KeynoteDTO> getKeynotes(){
-        List<Keynote> keynoteList = keynoteRepo.findAll();
-        List<KeynoteDTO> result = new ArrayList<>();
-        keynoteList.forEach(keynote -> {
-            KeynoteDTO mappedItem = keynoteMapper.fromKeynote(keynote);
-            result.add(mappedItem);
-        });
-        return result;
+    public List<Keynote> getKeynotes(){
+        return keynoteRepo.findAll();
     }
 
     @GetMapping(path = "/keynote/{id}")
-    public KeynoteDTO getKeynoteById(@PathVariable String id) {
-        Keynote item = keynoteRepo.findById(id).orElse(null);
-        return keynoteMapper.fromKeynote(item);
+    public Keynote getKeynoteById(@PathVariable String id) {
+        return keynoteRepo.findById(id).orElse(null);
     }
 
     @PutMapping(path = "/keynote/{id}")
@@ -55,7 +48,7 @@ public class KeynoteController {
     }
 
     @PostMapping(path = "/keynote")
-    public KeynoteDTO AddNewKeynote(@RequestBody KeynoteDTO newItem){
+    public Keynote AddNewKeynote(@RequestBody KeynoteDTO newItem){
         Keynote item = Keynote.builder()
                 .nom(newItem.getNom())
                 .prenom(newItem.getPrenom())
@@ -63,7 +56,7 @@ public class KeynoteController {
                 .function(newItem.getFunction())
                 .build();
         keynoteRepo.save(item);
-        return keynoteMapper.fromKeynote(item);
+        return item;
     }
 
     @DeleteMapping(path = "/keynote/{id}")

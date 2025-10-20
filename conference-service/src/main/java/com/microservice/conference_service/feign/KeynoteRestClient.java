@@ -11,8 +11,8 @@ import java.util.List;
 
 @FeignClient(name = "keynote-service")
 public interface KeynoteRestClient {
-    @GetMapping("api/keynotes/{id}")
+    @GetMapping("keynote/{id}")
     Keynote findKeynoteById(@PathVariable String id);
-    @GetMapping("api/keynotes")
-    PagedModel<Keynote> findAllKeynote();
+    @GetMapping("keynote")
+    List<Keynote> findAllKeynote();
 }
