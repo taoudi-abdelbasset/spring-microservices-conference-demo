@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.microservice</groupId>
-	<artifactId>cofig-service</artifactId>
+	<artifactId>config-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cofig-service</name>
+	<name>config-service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
