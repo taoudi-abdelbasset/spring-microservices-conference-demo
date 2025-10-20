@@ -1,8 +1,8 @@
-package com.microservice.conference_service.entities;
+package com.microservice.conference_service.dtos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.microservice.conference_service.enums.ConferenceType;
 import com.microservice.conference_service.models.Keynote;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,23 +11,18 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Data @AllArgsConstructor
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Conference {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ConferenceDTO {
     private String title;
-    @Enumerated(EnumType.STRING)
     private ConferenceType type;
     private Date date;
     private Long duration;
     private Long inscription;
     private Double score;
-    @OneToOne
-    private String keynoteId;
-    @Transient private Keynote keynote;
-    @OneToMany(mappedBy = "conferenceId")
-    private List<Review> reviews;
+    private Keynote keynote;
+    @JsonManagedReference
+    private List<ReviewDTO> reviews;
 }
