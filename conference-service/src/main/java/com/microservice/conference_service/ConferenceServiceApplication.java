@@ -46,6 +46,7 @@ public class ConferenceServiceApplication {
                         .inscription(10L + new Random().nextInt(40))
                         .score(4.5)
                         .keynoteId(item.getId())
+                        .keynote(item)
                         .build();
 
                 conferenceRepo.save(conference);

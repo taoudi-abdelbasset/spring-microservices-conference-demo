@@ -20,6 +20,6 @@ public class Review {
     private String text;
     private Double note;
     @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Conference conference;
+    @JoinColumn(name = "conference_id") // Maps the foreign key column
+    private Conference conference; // Reference to Conference entity
 }
