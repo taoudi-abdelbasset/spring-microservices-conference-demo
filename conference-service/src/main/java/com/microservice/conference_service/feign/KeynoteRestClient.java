@@ -10,8 +10,8 @@ import java.util.List;
 
 @FeignClient(name = "keynote-service")
 public interface KeynoteRestClient {
-    @GetMapping("api/keynotes/{id}")
+    @GetMapping("api/keynote/{id}")
     Keynote findKeynoteById(@PathVariable String id);
-    @GetMapping("api/keynotes")
+    @GetMapping("api/keynote")
     List<Keynote> findAllKeynote();
 }
