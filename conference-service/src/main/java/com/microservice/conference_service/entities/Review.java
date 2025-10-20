@@ -18,7 +18,8 @@ public class Review {
     private Date createdAt;
     private String text;
     private Double note;
-    @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Conference conference;
+    @ManyToOne
+    private Long conferenceId;
 }

@@ -25,7 +25,6 @@ public class Conference {
     private Long duration;
     private Long inscription;
     private Double score;
-    @OneToOne
     private String keynoteId;
     @Transient private Keynote keynote;
     @OneToMany(mappedBy = "conferenceId")
